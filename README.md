@@ -45,6 +45,12 @@ cd kubespray
 pip install -U -r requirements.txt
 ```
 
+##### Update pip
+
+```
+python3 -m pip install --upgrade pip
+```
+
 ##### Create host inventory
 Why `102`, `103`, `104`. It is internal ip addresses of server defined in `compute-instance.tf`
 ```

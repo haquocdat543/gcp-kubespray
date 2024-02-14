@@ -61,6 +61,25 @@ cluster_name: mycluster
 kube_version: v1.28.1
 EOF
 ```
+##### Copy ssh key
+let copy `private key` to ssh to `worker servers` and set permission
+```
+read -p "$(echo -e "Enter private key [PrivateKey]: ")" key
+key=${key:-PrivateKey}
+cat << EOF | sudo tee -a ~/.ssh/id_rsa
+$key
+EOF
+```
+Set permission
+```
+chmod 400 ~/.ssh/id_rsa
+```
+
+##### Edit hosts.yaml
+add following line below each node's `access_ip`:
+```
+ansible_ssh_private_key_file: ~/.ssh/id_rsa
+```
 
 ##### Inspect hosts.yaml
 ```

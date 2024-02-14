@@ -26,3 +26,90 @@ terraform plan
 terraform apply --auto-approve
 ```
 #### 3. Configure cluster on master node
+##### ssh to master node
+##### Create project directory
+```
+mkdir -p homelab/kubernetes
+cd homelab/kubernetes
+```
+##### Create project directory
+
+```
+python3 -m venv kubespray-venv
+source kubespray-venv/bin/activate
+```
+
+##### Install Ansible
+```
+cd kubespray
+pip install -U -r requirements.txt
+```
+
+##### Create host inventory
+Why `102`, `103`, `104`. It is internal ip addresses of server defined in `compute-instance.tf`
+```
+declare -a IPS=(10.0.0.102 10.0.0.103 10.0.0.104)
+cd ../ 
+mkdir -p cluster/homelab-k8s
+CONFIG_FILE=cluster/homelab-k8s/hosts.yaml python3 kubespray/contrib/inventory_builder/inventory.py ${IPS[@]}
+```
+
+##### Create host inventory
+```
+cat << EOF | sudo tee -a ~/homelab/kubernetes/cluster/homelab-k8s/cluster-config.yaml
+cluster_name: mycluster
+kube_version: v1.28.1
+EOF
+```
+
+##### Inspect hosts.yaml
+```
+cat cluster/homelab-k8s/hosts.yaml
+```
+
+##### Inspect cluster-config.yaml
+```
+cat cluster/homelab-k8s/cluster-config.yaml
+```
+
+#### 4. Deploy cluster
+##### Deploy
+Replace `$ssh-user` with your real user to ssh to servers
+```
+cd kubespray
+ansible-playbook -i ../cluster/homelab-k8s/hosts.yaml -e @../cluster/homelab-k8s/cluster-config.yaml --user=$ssh-user --become --become-user=root cluster.yml
+```
+
+##### Upgrade cluster
+Replace `$ssh-user` with your real user to ssh to servers
+```
+cd kubespray
+ansible-playbook -i ../cluster/homelab-k8s/hosts.yaml -e @../cluster/homelab-k8s/cluster-config.yaml --user=$ssh-user --become --become-user=root upgrade-cluster.yml
+```
+##### Scale down cluster
+Replace `$ssh-user` with your real user to ssh to servers
+```
+cd kubespray
+ansible-playbook -i ../cluster/homelab-k8s/hosts.yaml -e @../cluster/homelab-k8s/cluster-config.yaml --user=$ssh-user --become --become-user=root remove-node.yaml -e node=node5
+```
+##### Scale up cluster
+Replace `$ssh-user` with your real user to ssh to servers
+```
+cd kubespray
+ansible-playbook -i ../cluster/homelab-k8s/hosts.yaml -e @../cluster/homelab-k8s/cluster-config.yaml --user=$ssh-user --become --become-user=root scale.yaml --limit=node5
+```
+
+#### 5. Get kubeconfig
+First ssh to `10.0.0.102` server ( node1 ). Then:
+
+Verify that cluster successfully established
+```
+sudo su -
+kubectl get nodes
+kubectl -n kube-system get pods
+```
+#### 6. Deploy workloads
+#### 7. Destroy infrastructure
+```
+terraform destroy --auto-approve
+```

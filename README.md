@@ -38,6 +38,10 @@ cd homelab/kubernetes
 python3 -m venv kubespray-venv
 source kubespray-venv/bin/activate
 ```
+##### Clone kubespray repository
+```
+git clone https://github.com/kubernetes-sigs/kubespray.git
+```
 
 ##### Install Ansible
 ```

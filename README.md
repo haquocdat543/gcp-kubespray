@@ -64,9 +64,9 @@ mkdir -p cluster/homelab-k8s
 CONFIG_FILE=cluster/homelab-k8s/hosts.yaml python3 kubespray/contrib/inventory_builder/inventory.py ${IPS[@]}
 ```
 
-##### Create host inventory
+##### Create cluster config
 ```
-cat << EOF | sudo tee -a ~/homelab/kubernetes/cluster/homelab-k8s/cluster-config.yaml
+cat << EOF | sudo tee -a /home/$USER/homelab/kubernetes/cluster/homelab-k8s/cluster-config.yaml
 cluster_name: mycluster
 kube_version: v1.28.1
 EOF

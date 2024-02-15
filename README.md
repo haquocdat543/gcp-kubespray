@@ -159,11 +159,26 @@ ansible-playbook -i ../cluster/homelab-k8s/hosts.yaml -e @../cluster/homelab-k8s
 First ssh to `10.0.0.102` server ( node1 ). Then:
 
 Verify that cluster successfully established
+
 ```
 sudo su -
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
 kubectl get nodes
 kubectl -n kube-system get pods
 ```
+
+Install `rsync`
+
+```
+sudo yum install rsync -y
+
+```
+Copy kubeconfig to master:
+
+```
+rsync -avz -e "ssh -i ~/.scripts/ssh/id_rsa" ~/.kube/config $ssh-user@10.0.0.102:/home/$ssh-user/.kube/config
+```
+
 #### 6. Deploy workloads
 #### 7. Destroy infrastructure
 ```

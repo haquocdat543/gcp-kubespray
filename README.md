@@ -9,15 +9,15 @@ This guide is based on [kubespray-github](https://github.com/kubernetes-sigs/kub
 #### 1. Configure variables
 Replace `$value` with your real project id
 ```
-export TF_VAR_projectId="$value"
+export TF_VAR_projectId=$value
 ```
 Replace `$value` with your real ssh public key
 ```
-export TF_VAR_ssh_key="$value"
+export TF_VAR_ssh_key=$value
 ```
 Replace `$value` with your real ssh user
 ```
-export ssh_key="$value"
+export ssh_user=$value
 ```
 #### 2. Initialize infrastructure
 ```
@@ -175,7 +175,7 @@ Copy `private key` to node1:
 
 Replace `$value` with your real ssh user
 ```
-export ssh_key="$value"
+export ssh_user=$value
 rsync -avz -e "ssh -i ~/.ssh/id_rsa" ~/.ssh/id_rsa $ssh_user@10.0.0.102:/home/$ssh_user/.ssh/id_rsa
 ```
 
@@ -203,7 +203,16 @@ Copy kubeconfig to master:
 
 Replace `$value` with your real ssh user
 ```
-rsync -avz -e "ssh -i ~/.ssh/id_rsa" ~/.kube/config $ssh_user@10.0.0.101:/home/$ssh_user/.kube/config
+export ssh_user=$value
+rsync -avz -e "ssh -i /home/$ssh_user/.ssh/id_rsa" ~/.kube/config $ssh_user@10.0.0.101:/home/$ssh_user/.kube/config
+```
+Check that we can interact with cluster from master:
+
+```
+sudo su -
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+kubectl get nodes
+kubectl -n kube-system get pods
 ```
 
 #### 6. Deploy workloads

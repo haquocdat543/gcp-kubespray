@@ -13,7 +13,7 @@ export TF_VAR_projectId="$value"
 ```
 Replace `$value` with your real ssh public key
 ```
-export TF_VAR_ssh-key="$value"
+export TF_VAR_ssh_key="$value"
 ```
 #### 2. Initialize infrastructure
 ```

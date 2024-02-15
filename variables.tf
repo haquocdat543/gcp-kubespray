@@ -8,7 +8,7 @@ variable "region" {
   type = string
 }
 
-variable "ssh-key" {
+variable "ssh_key" {
   sensitive = true
   type = string
 }

@@ -283,10 +283,10 @@ ssh to master:
 ssh -i /home/$ssh_user/.ssh/id_rsa $ssh_user@10.0.0.101
 ```
 
+edit: server: https://127.0.0.1:6443 > server: https://10.0.0.102:6443 
 ```
-vi ~/.kube/config
+sed -i 's@server: https://127.0.0.1:6443@server: https://10.0.0.102:6443@g' /home/$USER/.kube/config
 ```
-server: https://127.0.0.1:6443 > server: https://10.0.0.102:6443 
 
 ```
 sudo su -

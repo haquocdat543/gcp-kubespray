@@ -149,9 +149,49 @@ etcd : Gen_certs | Gather etcd member/admin and kube_control_plane client certs 
 ##### Upgrade cluster
 Replace `$ssh_user` with your real user to ssh to servers
 ```
+cat << EOF | sudo tee -a /home/$USER/homelab/kubernetes/cluster/homelab-k8s/cluster-config.yaml
+cluster_name: mycluster
+kube_version: v1.29.1
+EOF
+```
+
+```
 cd kubespray
 ansible-playbook -i ../cluster/homelab-k8s/hosts.yaml -e @../cluster/homelab-k8s/cluster-config.yaml --user=$USER --become --become-user=root upgrade-cluster.yml
 ```
+Output:
+```
+Thursday 15 February 2024  05:51:41 +0000 (0:00:00.198)       0:17:33.989 *****
+===============================================================================
+kubernetes/control-plane : Kubeadm | Upgrade other masters ---------------------------------------------------------------------------------------------------------------------------------------- 103.72s
+kubernetes/control-plane : Kubeadm | Upgrade first master ------------------------------------------------------------------------------------------------------------------------------------------ 79.50s
+download : Download_file | Download item ----------------------------------------------------------------------------------------------------------------------------------------------------------- 71.13s
+download : Download_file | Download item ----------------------------------------------------------------------------------------------------------------------------------------------------------- 39.13s
+download : Download_file | Download item ----------------------------------------------------------------------------------------------------------------------------------------------------------- 30.89s
+upgrade/pre-upgrade : Drain node ------------------------------------------------------------------------------------------------------------------------------------------------------------------- 11.98s
+etcd : Gen_certs | Write etcd member/admin and kube_control_plane client certs to other etcd nodes ------------------------------------------------------------------------------------------------- 11.66s
+network_plugin/cni : CNI | Copy cni plugins --------------------------------------------------------------------------------------------------------------------------------------------------------- 9.25s
+etcdctl_etcdutl : Download_file | Download item ----------------------------------------------------------------------------------------------------------------------------------------------------- 9.03s
+upgrade/pre-upgrade : Drain node -------------------------------------------------------------------------------------------------------------------------------------------------------------------- 7.88s
+kubernetes-apps/ansible : Kubernetes Apps | Lay Down CoreDNS templates ------------------------------------------------------------------------------------------------------------------------------ 6.95s
+kubernetes-apps/ansible : Kubernetes Apps | Lay Down CoreDNS templates ------------------------------------------------------------------------------------------------------------------------------ 6.94s
+etcdctl_etcdutl : Extract_file | Unpacking archive -------------------------------------------------------------------------------------------------------------------------------------------------- 6.71s
+kubernetes/control-plane : Master | wait for kube-scheduler ----------------------------------------------------------------------------------------------------------------------------------------- 6.61s
+etcd : Gen_certs | Gather etcd member/admin and kube_control_plane client certs from first etcd node ------------------------------------------------------------------------------------------------ 6.58s
+container-engine/containerd : Containerd | Unpack containerd archive -------------------------------------------------------------------------------------------------------------------------------- 6.45s
+kubernetes-apps/ansible : Kubernetes Apps | Start Resources ----------------------------------------------------------------------------------------------------------------------------------------- 6.11s
+kubernetes-apps/ansible : Kubernetes Apps | Start Resources ----------------------------------------------------------------------------------------------------------------------------------------- 5.87s
+kubernetes/control-plane : Kubeadm | Check apiserver.crt SAN hosts ---------------------------------------------------------------------------------------------------------------------------------- 5.62s
+kubernetes/control-plane : Backup old certs and keys ------------------------------------------------------------------------------------------------------------------------------------------------ 4.35s
+```
+
+```
+NAME    STATUS   ROLES           AGE   VERSION
+node1   Ready    control-plane   95m   v1.29.1
+node2   Ready    control-plane   95m   v1.29.1
+node3   Ready    <none>          95m   v1.29.1
+```
+
 ##### Scale down cluster
 Replace `$ssh_user` with your real user to ssh to servers
 ```

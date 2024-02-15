@@ -166,7 +166,20 @@ ansible-playbook -i ../cluster/homelab-k8s/hosts.yaml -e @../cluster/homelab-k8s
 ```
 
 #### 5. Get kubeconfig
-First ssh to `10.0.0.102` server ( node1 ). Then:
+Install `rsync` on master:
+
+```
+sudo yum install rsync -y
+```
+Copy `private key` to node1:
+
+Replace `$value` with your real ssh user
+```
+export ssh_key="$value"
+rsync -avz -e "ssh -i ~/.ssh/id_rsa" ~/.ssh/id_rsa $ssh_user@10.0.0.102:/home/$ssh_user/.ssh/id_rsa
+```
+
+then ssh to `10.0.0.102` server ( node1 ). Then:
 ```
 ssh -i ~/.ssh/id_rsa $USER@10.0.0.102
 ```
@@ -188,8 +201,9 @@ sudo yum install rsync -y
 ```
 Copy kubeconfig to master:
 
+Replace `$value` with your real ssh user
 ```
-rsync -avz -e "ssh -i ~/.scripts/ssh/id_rsa" ~/.kube/config $ssh_user@10.0.0.102:/home/$ssh_user/.kube/config
+rsync -avz -e "ssh -i ~/.ssh/id_rsa" ~/.kube/config $ssh_user@10.0.0.101:/home/$ssh_user/.kube/config
 ```
 
 #### 6. Deploy workloads

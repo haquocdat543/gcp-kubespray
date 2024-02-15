@@ -193,6 +193,36 @@ kubectl get nodes
 kubectl -n kube-system get pods
 ```
 
+```
+NAME    STATUS   ROLES           AGE   VERSION
+node1   Ready    control-plane   66m   v1.28.1
+node2   Ready    control-plane   66m   v1.28.1
+node3   Ready    <none>          65m   v1.28.1
+```
+
+```
+calico-kube-controllers-648dffd99-ckzdw   1/1     Running   0          67m
+calico-node-2plbz                         1/1     Running   0          67m
+calico-node-7rmtv                         1/1     Running   0          67m
+calico-node-tgnng                         1/1     Running   0          67m
+coredns-77f7cc69db-252fm                  1/1     Running   0          67m
+coredns-77f7cc69db-4jz7m                  1/1     Running   0          67m
+dns-autoscaler-8576bb9f5b-k6xmr           1/1     Running   0          67m
+kube-apiserver-node1                      1/1     Running   1          69m
+kube-apiserver-node2                      1/1     Running   1          69m
+kube-controller-manager-node1             1/1     Running   2          69m
+kube-controller-manager-node2             1/1     Running   2          68m
+kube-proxy-kzgln                          1/1     Running   0          68m
+kube-proxy-nckjx                          1/1     Running   0          68m
+kube-proxy-vr87b                          1/1     Running   0          68m
+kube-scheduler-node1                      1/1     Running   1          69m
+kube-scheduler-node2                      1/1     Running   1          68m
+nginx-proxy-node3                         1/1     Running   0          67m
+nodelocaldns-6lj8g                        1/1     Running   0          67m
+nodelocaldns-b4v5q                        1/1     Running   0          67m
+nodelocaldns-hsmfh                        1/1     Running   0          67m
+```
+
 Install `rsync`
 
 ```
@@ -223,6 +253,37 @@ sudo su -
 curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
 kubectl get nodes
 kubectl -n kube-system get pods
+```
+
+Output:
+```
+NAME    STATUS   ROLES           AGE   VERSION
+node1   Ready    control-plane   66m   v1.28.1
+node2   Ready    control-plane   66m   v1.28.1
+node3   Ready    <none>          65m   v1.28.1
+```
+
+```
+calico-kube-controllers-648dffd99-ckzdw   1/1     Running   0          67m
+calico-node-2plbz                         1/1     Running   0          67m
+calico-node-7rmtv                         1/1     Running   0          67m
+calico-node-tgnng                         1/1     Running   0          67m
+coredns-77f7cc69db-252fm                  1/1     Running   0          67m
+coredns-77f7cc69db-4jz7m                  1/1     Running   0          67m
+dns-autoscaler-8576bb9f5b-k6xmr           1/1     Running   0          67m
+kube-apiserver-node1                      1/1     Running   1          69m
+kube-apiserver-node2                      1/1     Running   1          69m
+kube-controller-manager-node1             1/1     Running   2          69m
+kube-controller-manager-node2             1/1     Running   2          68m
+kube-proxy-kzgln                          1/1     Running   0          68m
+kube-proxy-nckjx                          1/1     Running   0          68m
+kube-proxy-vr87b                          1/1     Running   0          68m
+kube-scheduler-node1                      1/1     Running   1          69m
+kube-scheduler-node2                      1/1     Running   1          68m
+nginx-proxy-node3                         1/1     Running   0          67m
+nodelocaldns-6lj8g                        1/1     Running   0          67m
+nodelocaldns-b4v5q                        1/1     Running   0          67m
+nodelocaldns-hsmfh                        1/1     Running   0          67m
 ```
 
 #### 6. Deploy workloads

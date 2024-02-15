@@ -208,6 +208,16 @@ rsync -avz -e "ssh -i /home/$ssh_user/.ssh/id_rsa" ~/.kube/config $ssh_user@10.0
 ```
 Check that we can interact with cluster from master:
 
+ssh to master:
+```
+ssh -i /home/$ssh_user/.ssh/id_rsa $ssh_user@10.0.0.101
+```
+
+```
+vi ~/.kube/config
+```
+server: https://127.0.0.1:6443 > server: https://10.0.0.102:6443 
+
 ```
 sudo su -
 curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"

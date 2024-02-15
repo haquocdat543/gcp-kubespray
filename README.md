@@ -15,6 +15,10 @@ Replace `$value` with your real ssh public key
 ```
 export TF_VAR_ssh_key="$value"
 ```
+Replace `$value` with your real ssh user
+```
+export ssh_key="$value"
+```
 #### 2. Initialize infrastructure
 ```
 terraform init
@@ -75,7 +79,7 @@ EOF
 let copy `private key` to ssh to `worker servers` and set permission
 From local to server:
 ```
-rsync -avz -e "ssh -i ~/.ssh/id_rsa" ~/.ssh/id_rsa $ssh-user@destination_server:/home/$ssh-user/.ssh/id_rsa
+rsync -avz -e "ssh -i ~/.ssh/id_rsa" ~/.ssh/id_rsa $ssh_user@destination_server:/home/$ssh_user/.ssh/id_rsa
 
 ```
 Or:
@@ -143,22 +147,22 @@ container-engine/nerdctl : Extract_file | Unpacking archive --------------------
 etcd : Gen_certs | Gather etcd member/admin and kube_control_plane client certs from first etcd node ------------------------------------------------------------------------------------------------ 6.50s
 ```
 ##### Upgrade cluster
-Replace `$ssh-user` with your real user to ssh to servers
+Replace `$ssh_user` with your real user to ssh to servers
 ```
 cd kubespray
-ansible-playbook -i ../cluster/homelab-k8s/hosts.yaml -e @../cluster/homelab-k8s/cluster-config.yaml --user=$ssh-user --become --become-user=root upgrade-cluster.yml
+ansible-playbook -i ../cluster/homelab-k8s/hosts.yaml -e @../cluster/homelab-k8s/cluster-config.yaml --user=$ssh_user --become --become-user=root upgrade-cluster.yml
 ```
 ##### Scale down cluster
-Replace `$ssh-user` with your real user to ssh to servers
+Replace `$ssh_user` with your real user to ssh to servers
 ```
 cd kubespray
-ansible-playbook -i ../cluster/homelab-k8s/hosts.yaml -e @../cluster/homelab-k8s/cluster-config.yaml --user=$ssh-user --become --become-user=root remove-node.yaml -e node=node5
+ansible-playbook -i ../cluster/homelab-k8s/hosts.yaml -e @../cluster/homelab-k8s/cluster-config.yaml --user=$ssh_user --become --become-user=root remove-node.yaml -e node=node5
 ```
 ##### Scale up cluster
-Replace `$ssh-user` with your real user to ssh to servers
+Replace `$ssh_user` with your real user to ssh to servers
 ```
 cd kubespray
-ansible-playbook -i ../cluster/homelab-k8s/hosts.yaml -e @../cluster/homelab-k8s/cluster-config.yaml --user=$ssh-user --become --become-user=root scale.yaml --limit=node5
+ansible-playbook -i ../cluster/homelab-k8s/hosts.yaml -e @../cluster/homelab-k8s/cluster-config.yaml --user=$ssh_user --become --become-user=root scale.yaml --limit=node5
 ```
 
 #### 5. Get kubeconfig
@@ -185,7 +189,7 @@ sudo yum install rsync -y
 Copy kubeconfig to master:
 
 ```
-rsync -avz -e "ssh -i ~/.scripts/ssh/id_rsa" ~/.kube/config $ssh-user@10.0.0.102:/home/$ssh-user/.kube/config
+rsync -avz -e "ssh -i ~/.scripts/ssh/id_rsa" ~/.kube/config $ssh_user@10.0.0.102:/home/$ssh_user/.kube/config
 ```
 
 #### 6. Deploy workloads

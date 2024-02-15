@@ -150,19 +150,19 @@ etcd : Gen_certs | Gather etcd member/admin and kube_control_plane client certs 
 Replace `$ssh_user` with your real user to ssh to servers
 ```
 cd kubespray
-ansible-playbook -i ../cluster/homelab-k8s/hosts.yaml -e @../cluster/homelab-k8s/cluster-config.yaml --user=$ssh_user --become --become-user=root upgrade-cluster.yml
+ansible-playbook -i ../cluster/homelab-k8s/hosts.yaml -e @../cluster/homelab-k8s/cluster-config.yaml --user=$USER --become --become-user=root upgrade-cluster.yml
 ```
 ##### Scale down cluster
 Replace `$ssh_user` with your real user to ssh to servers
 ```
 cd kubespray
-ansible-playbook -i ../cluster/homelab-k8s/hosts.yaml -e @../cluster/homelab-k8s/cluster-config.yaml --user=$ssh_user --become --become-user=root remove-node.yaml -e node=node5
+ansible-playbook -i ../cluster/homelab-k8s/hosts.yaml -e @../cluster/homelab-k8s/cluster-config.yaml --user=$USER --become --become-user=root remove-node.yaml -e node=node5
 ```
 ##### Scale up cluster
 Replace `$ssh_user` with your real user to ssh to servers
 ```
 cd kubespray
-ansible-playbook -i ../cluster/homelab-k8s/hosts.yaml -e @../cluster/homelab-k8s/cluster-config.yaml --user=$ssh_user --become --become-user=root scale.yaml --limit=node5
+ansible-playbook -i ../cluster/homelab-k8s/hosts.yaml -e @../cluster/homelab-k8s/cluster-config.yaml --user=$USER --become --become-user=root scale.yaml --limit=node5
 ```
 
 #### 5. Get kubeconfig

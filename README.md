@@ -103,10 +103,9 @@ cat cluster/homelab-k8s/cluster-config.yaml
 
 #### 4. Deploy cluster
 ##### Deploy
-Replace `$ssh-user` with your real user to ssh to servers
 ```
 cd kubespray
-ansible-playbook -i ../cluster/homelab-k8s/hosts.yaml -e @../cluster/homelab-k8s/cluster-config.yaml --user=$ssh-user --become --become-user=root cluster.yml
+ansible-playbook -i ../cluster/homelab-k8s/hosts.yaml -e @../cluster/homelab-k8s/cluster-config.yaml --user=$USER --become --become-user=root cluster.yml
 ```
 
 ##### Upgrade cluster

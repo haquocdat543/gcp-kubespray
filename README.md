@@ -73,6 +73,12 @@ EOF
 ```
 ##### Copy ssh key
 let copy `private key` to ssh to `worker servers` and set permission
+From local to server:
+```
+rsync -avz -e "ssh -i ~/.ssh/id_rsa" ~/.ssh/id_rsa $ssh-user@destination_server:/home/$ssh-user/.ssh/id_rsa
+
+```
+Or:
 ```
 read -p "$(echo -e "Enter private key [PrivateKey]: ")" key
 key=${key:-PrivateKey}
@@ -157,6 +163,9 @@ ansible-playbook -i ../cluster/homelab-k8s/hosts.yaml -e @../cluster/homelab-k8s
 
 #### 5. Get kubeconfig
 First ssh to `10.0.0.102` server ( node1 ). Then:
+```
+ssh -i ~/.ssh/id_rsa $USER@10.0.0.102
+```
 
 Verify that cluster successfully established
 
